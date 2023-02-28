@@ -1,36 +1,50 @@
 import ProductItem from "./ProductItem";
-import TestJpg from "../assets/test.jpg"
+import TestJpg from "../assets/test.jpg";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { db } from "../api/firebase";
 
-
-const datos = {
-  products: [
-    {
-      name: "Trabajados de finanzas 2",
-      slug: "finance-lowcost",
-      category: "Finanzas",
-      image: TestJpg,
-      price: 80,
-      description: "Trabajos de finanzas baratos.",
-    },
-    {
-      name: "Realizo trabajos para econometria",
-      slug: "finance-lowcost2",
-      category: "Econometría",
-      image: TestJpg,
-      price: 140,
-      description: "Trabajos de finanzas baratos.",
-    },
-  ],
-};
+// const datos = {
+//   products: [
+//     {
+//       name: "Trabajados de finanzas 2",
+//       slug: "finance-lowcost",
+//       category: "Finanzas",
+//       image: TestJpg,
+//       price: 80,
+//       description: "Trabajos de finanzas baratos.",
+//     },
+//     {
+//       name: "Realizo trabajos para econometria",
+//       slug: "finance-lowcost2",
+//       category: "Econometría",
+//       image: TestJpg,
+//       price: 140,
+//       description: "Trabajos de finanzas baratos.",
+//     },
+//   ],
+// };
 
 export function MainContent() {
+  const [productList, setProductList] = useState([]);
+  const productsCollectionRef = collection(db, "Products");
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const data = await getDocs(productsCollectionRef);
+      setProductList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getProducts();
+  });
+
   return (
     <main className="container m-auto mt-4">
       <div className="flex">
         <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
           <div className="space-y-3">
             <div className="flex items-center">
-              <h2 className="text-xl font-bold">Dashboard</h2>
+              <h2 className="text-xl font-bold text-zinc-900">Dashboard</h2>
             </div>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center py-4">
@@ -183,16 +197,55 @@ export function MainContent() {
           </div>
         </div>
 
-        
         <div className="container mx-4 mt-2">
           <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
-            {datos.products.map((product) => (
+            {/* {productList.map((product) => {
+              <ProductItem product={product}></ProductItem>;
+            })} */}
+            {/* {datos.products.map((product) => (
               <ProductItem product={product} key={product.slug}></ProductItem>
-            ))}
+            ))} */}
+            {productList.map((product) => {
+              return (
+                <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
+                  {/* <a href={`/product/${product.title}`}>
+                    <img
+                      src={Testjpg}
+                      // src={product.image}
+                      // alt={product.name}
+                      className="rounded shadow"
+                    />
+                  </a> */}
+
+                  <div
+                    className="flex flex-col items-center justify-center p-5"
+                    referrerPolicy="no-referrer"
+                  >
+                    <a href="/">
+                      <h2 className="text-sm font-medium text-gray-500 truncate">
+                        {product.title}
+                      </h2>
+                    </a>
+                    <p className="mb-2 text-lg font-semibold text-gray-900">
+                      {/* {product.category} */}
+                      {product.description}
+                    </p>
+                    <p className="mt-1 text-3xl font-semibold text-gray-900">
+                      {/* ${product.price} */}
+                      {product.author.name}
+                    </p>
+                    <button
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+                      type="button"
+                    >
+                      Comprar
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-
       </div>
       <footer className="flex h-10 justify-center items-center shadow-inne">
         <p>Copyright © Carlos Ibáñez</p>

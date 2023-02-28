@@ -3,8 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../api/firebase";
 
 export function Header() {
-  
-  const [user, loading] = useAuthState(auth); 
+  const [user, loading] = useAuthState(auth);
 
   return (
     <header className="my-2">
@@ -127,23 +126,26 @@ export function Header() {
           Sign In
         </a> */}
 
-        {!user && ( 
-        <Link
-          className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
-          to={"/login"}
-        >
-          Sign In
-        </Link>
+        {!user && (
+          <Link
+            className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+            to={"/login"}
+          >
+            Sign In
+          </Link>
         )}
         {user && (
           <div>
-          <div className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200">
-            <img src={user.photoURL} alt="" className="w-14"/>
-            <h2 className="text-center">{user.displayName}</h2>
-          </div>
-          <button onClick={() => auth.signOut()} className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200">
-            Sign Out
-          </button>
+            <div className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200">
+              <img src={user.photoURL} alt="" className="w-14" />
+              <h2 className="text-center">{user.displayName}</h2>
+            </div>
+            <button
+              onClick={() => auth.signOut()}
+              className="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200"
+            >
+              Sign Out
+            </button>
           </div>
         )}
         {/* <a
@@ -159,6 +161,14 @@ export function Header() {
           Sign Up
         </Link> */}
       </nav>
+
+      {/* Extra content, create products*/}
+      {user && (
+        <div>
+          <Link to="createproduct">Crear producto</Link>
+        </div>
+      )}
+
       <div className="navbar-menu relative z-50 hidden">
         <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-25"></div>
         <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto">

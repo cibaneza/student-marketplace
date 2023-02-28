@@ -19,7 +19,7 @@ export function Login() {
       console.log(result.user);
       navigate("/");
     } catch (error) {
-      console.log("Hubo un error");
+      console.log("Hubo un error en el login");
     }
   };
 

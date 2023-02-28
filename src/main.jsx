@@ -8,6 +8,7 @@ import { Register } from "./pages/SignUp/Register";
 import NotFound from "./pages/NotFound";
 import { Header } from "./components/Header";
 import { MainContent } from "./components/MainContent";
+import CreateProduct from "./pages/CreateProduct";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/createproduct",
+    element: <CreateProduct />,
   },
 ]);
 
